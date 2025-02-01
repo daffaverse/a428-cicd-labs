@@ -1,6 +1,6 @@
 node {
     stage('Checkout') {
-        git branch: 'react-app', url: '[URL repository Anda]'
+        git branch: 'react-app', url: 'https://github.com/daffaverse/a428-cicd-labs.git'
     }
     
     stage('Install') {
