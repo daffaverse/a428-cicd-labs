@@ -15,7 +15,7 @@ node {
         stage('Deploy') {
             sh './jenkins/scripts/deliver.sh'
             input massage: 'Sudah selesai menggunakan react app? (klik "end")'
-            sh './jenkins/script/kill.sh'
+            sh './jenkins/scripts/kill.sh'
         }
     }
 }
