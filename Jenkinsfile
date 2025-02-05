@@ -11,5 +11,11 @@ node {
         stage('Test') {
             sh 'npm test'
         }
+
+        stage('Deploy') {
+            sh './jenkins/scripts/deliver.sh'
+            input massage: 'Sudah selesai menggunakan react app? (klik "end")'
+            sh './jenkins/script/kill.sh'
+        }
     }
 }
