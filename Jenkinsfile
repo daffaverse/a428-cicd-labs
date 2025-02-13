@@ -12,16 +12,19 @@ node {
         stage('Test') {
             sh 'npm test'
         }
-
-        stage('Manual Approval'){
+        
+        stage('Manual Approval') {
             input message: 'Lanjutkan ke tahap Deploy?'
         }
-
+        
         stage('Deploy') {
-            sh """
-                scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@34.29.4.55:/home/user/app
-                ssh -o StrictHostKeyChecking=no c312b4ky1672@34.29.4.55 'pm2 restart app || pm2 start npm --name app -- start'
-            """
-            sleep 60
+            sshagent(['gcp-ssh-key']) {
+                sh """
+                    scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@34.143.130.225:/home/c312b4ky1672/app
+                    ssh -o StrictHostKeyChecking=no c312b4ky1672@34.143.130.225 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
+                """
+                sleep 60
+            }
+        }
     }
 }
