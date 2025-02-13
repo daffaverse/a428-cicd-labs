@@ -21,8 +21,8 @@ node {
     stage('Deploy') {
         sshagent(credentials: ['gcp-ssh-key']) {
             sh """
-                rsync -avz -e "ssh -o StrictHostKeyChecking=no" build/ c312b4ky1672@34.171.168.234:/home/c312b4ky1672/app/
-                ssh -o StrictHostKeyChecking=no c312b4ky1672@34.171.168.234 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
+                scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@35.223.229.24:/home/c312b4ky1672/app/
+                ssh -o StrictHostKeyChecking=no c312b4ky1672@35.223.229.24 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
             """
         }
     }
