@@ -6,6 +6,7 @@ node {
     docker.image('node:16-buster-slim').inside {
         stage('Build') {
             sh 'npm install'
+            sh 'npm run build'
         }
         
         stage('Test') {
@@ -17,8 +18,10 @@ node {
         }
 
         stage('Deploy') {
-            sh 'npm start'
+            sh """
+                scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@34.29.4.55:/home/user/app
+                ssh -o StrictHostKeyChecking=no c312b4ky1672@34.29.4.55 'pm2 restart app || pm2 start npm --name app -- start'
+            """
             sleep 60
-        }
     }
 }
