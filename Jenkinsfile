@@ -24,6 +24,8 @@ node {
                 scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@35.223.229.24:/home/c312b4ky1672/app/
                 ssh -o StrictHostKeyChecking=no c312b4ky1672@35.223.229.24 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
             """
+        echo 'Apliaksi berhasil di Deploy'
+        sleep time: 60, unit: 'SECONDS'
         }
     }
 }
