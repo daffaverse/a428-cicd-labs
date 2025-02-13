@@ -15,6 +15,7 @@ node {
     }
     
     stage('Manual Approval') {
+        sh './jenkins/scripts/deliver.sh' 
         input message: 'Lanjutkan ke tahap Deploy?'
     }
     
@@ -22,7 +23,6 @@ node {
         sshagent(credentials: ['gcp-ssh-key']) {
             sh """
                 scp -o StrictHostKeyChecking=no -r package.json build/* c312b4ky1672@35.223.229.24:/home/c312b4ky1672/app/
-                ssh -o StrictHostKeyChecking=no c312b4ky1672@35.223.229.24 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
             """
         }
 
