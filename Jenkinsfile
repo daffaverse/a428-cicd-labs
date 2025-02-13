@@ -18,13 +18,12 @@ node {
         input message: 'Lanjutkan ke tahap Deploy?'
     }
     
-    stage('Deploy') {
+   stage('Deploy') {
         sshagent(['gcp-ssh-key']) {
             sh """
-                scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@34.29.4.55:/home/c312b4ky1672/app
+                rsync -avz -e "ssh -o StrictHostKeyChecking=no" build/ c312b4ky1672@34.29.4.55:/home/c312b4ky1672/app/
                 ssh -o StrictHostKeyChecking=no c312b4ky1672@34.29.4.55 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
             """
-            sleep 60
         }
     }
 }
