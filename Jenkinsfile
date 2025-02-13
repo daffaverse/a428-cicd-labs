@@ -19,9 +19,9 @@ node {
         
         stage('Deploy') {
             withCredentials([sshUserPrivateKey(credentialsId: 'gcp-ssh-key', keyFileVariable: 'SSH_KEY')]) {
-                sh """
-                    scp -i \$SSH_KEY -o StrictHostKeyChecking=no dist/add2vals c312b4ky1672@34.143.130.225:/home/c312b4ky1672/python-app/
-                    ssh -i \$SSH_KEY -o StrictHostKeyChecking=no c312b4ky1672@34.143.130.225 'chmod +x ~/python-app/add2vals'
+                 sh """
+                    scp -o StrictHostKeyChecking=no -r build/* c312b4ky1672@34.143.130.225:/home/c312b4ky1672/app
+                    ssh -o StrictHostKeyChecking=no c312b4ky1672@34.143.130.225 'cd ~/app && npm install && pm2 restart app || pm2 start npm --name app -- start'
                 """
                 sleep 60
             }
