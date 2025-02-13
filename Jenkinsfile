@@ -12,10 +12,13 @@ node {
             sh 'npm test'
         }
 
+        stage('Manual Approval'){
+            input massage: 'Lanjutkan ke tahap Deploy?'
+        }
+
         stage('Deploy') {
-            sh './jenkins/scripts/deliver.sh'
-            input massage: 'Sudah selesai menggunakan react app? (klik "end")'
-            sh './jenkins/scripts/kill.sh'
+            sh 'npm start'
+            sleep 60
         }
     }
 }
