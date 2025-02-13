@@ -13,7 +13,7 @@ node {
         }
 
         stage('Manual Approval'){
-            input massage: 'Lanjutkan ke tahap Deploy?'
+            input message: 'Lanjutkan ke tahap Deploy?'
         }
 
         stage('Deploy') {
